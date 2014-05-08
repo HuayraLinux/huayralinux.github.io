@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 import shutil
 
 import apt
@@ -73,6 +74,7 @@ if __name__ == '__main__':
         print(' Ej.: $ sudo huayra-update\n')
 
     else:
+        sys.stdin.flush()
         respuesta = raw_input('¿Desea continuar? (S)í/(N)o: ')
         if respuesta == 's':
             print('')
