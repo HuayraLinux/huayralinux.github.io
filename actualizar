@@ -2,13 +2,17 @@
 
 import os
 import shutil
+import sys
+import time
 
 import apt
 import apt.progress
 
+
 SOURCE_LIST = '/etc/apt/sources.list'
 SOURCE_LIST_BACKUP = '%s.brisa' % SOURCE_LIST
 HUAYRA_REPO = 'http://repo.huayra.conectarigualdad.gob.ar/huayra'
+
 
 def cambiar_repo():
     with open(SOURCE_LIST, 'r') as fd:
@@ -20,7 +24,6 @@ def cambiar_repo():
 
     with open(SOURCE_LIST, 'w') as fd:
         fd.write('\n'.join(renglones))
-
 
 def es_brisa():
     with open(SOURCE_LIST, 'r') as fd:
@@ -50,7 +53,6 @@ def actualizar_huayra():
         actualizar_distro()
         print('listo')
 
-
 def actualizar_distro():
     cache = apt.Cache()
     cache.update(apt.progress.text.AcquireProgress())
@@ -73,4 +75,11 @@ if __name__ == '__main__':
         print(' Ej.: $ sudo huayra-update\n')
 
     else:
+        sys.stdout.write('Actualizando a Huayra 2.0, presione "Ctrl + C" para cancelar: ')
+        for i in xrange(5, 0, -1):
+            sys.stdout.write('%d ' % i)
+            sys.stdout.flush()
+            time.sleep(1)
+        sys.stdout.write('\n')
+
         actualizar_huayra()
