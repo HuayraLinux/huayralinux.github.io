@@ -10,6 +10,11 @@ RUTAS_TESTING = {
     'huayra_version': './tests/huayra_version'
 }
 
+HUAYRA_VERSION_LIST = {
+    '1.0': 'brisa',
+    '2.0': 'pampero'
+}
+
 HUAYRA_1_REPOS = """
 #
 
@@ -66,7 +71,7 @@ class Test(unittest.TestCase):
         with open(RUTAS_TESTING['source.list'], 'r') as fd:
             archivo_original = fd.read()
 
-        with open(RUTAS_TESTING['source.list_backup'] % a.version_actual, 'r') as fd:
+        with open(RUTAS_TESTING['source.list_backup'] % HUAYRA_VERSION_LIST[a.version_actual], 'r') as fd:
             archivo_resguardo = fd.read()
 
         self.assertEqual(archivo_original, archivo_resguardo)
@@ -82,7 +87,7 @@ class Test(unittest.TestCase):
         with open(RUTAS_TESTING['source.list'], 'r') as fd:
             archivo_original = fd.read()
 
-        with open(RUTAS_TESTING['source.list_backup'] % a.version_actual, 'r') as fd:
+        with open(RUTAS_TESTING['source.list_backup'] % HUAYRA_VERSION_LIST[a.version_actual], 'r') as fd:
             archivo_resguardo = fd.read()
 
         self.assertNotEqual(archivo_original, archivo_resguardo)
