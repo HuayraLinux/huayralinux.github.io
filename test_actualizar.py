@@ -66,7 +66,7 @@ class Test(unittest.TestCase):
             fd.write(HUAYRA_1_REPOS)
 
         a = HuayraUpdate(rutas=RUTAS_TESTING)
-        a.resguardad_repos()
+        a.resguardar_repos()
 
         with open(RUTAS_TESTING['source.list'], 'r') as fd:
             archivo_original = fd.read()
@@ -82,7 +82,7 @@ class Test(unittest.TestCase):
             fd.write('TEST')
 
         a = HuayraUpdate(rutas=RUTAS_TESTING)
-        a.resguardad_repos()
+        a.resguardar_repos()
 
         with open(RUTAS_TESTING['source.list'], 'r') as fd:
             archivo_original = fd.read()
@@ -91,6 +91,12 @@ class Test(unittest.TestCase):
             archivo_resguardo = fd.read()
 
         self.assertNotEqual(archivo_original, archivo_resguardo)
+
+    def test_modificar_repos(self):
+        pass
+
+    def test_hay_actualizaciones_pendientes(self):
+        pass
 
 
 if __name__ == '__main__':

@@ -47,7 +47,7 @@ class HuayraUpdate(object):
 
         return self._version_actual
 
-    def resguardad_repos(self):
+    def resguardar_repos(self):
         if not os.path.isfile(self._source_list_backup):
             shutil.copy2(self.rutas['source.list'], self._source_list_backup)
 
