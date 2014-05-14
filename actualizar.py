@@ -4,6 +4,7 @@ import os
 import re
 import shutil
 import sys
+import time
 
 import apt
 import apt.progress
