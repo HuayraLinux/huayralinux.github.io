@@ -75,7 +75,7 @@ class HuayraUpdate(object):
             if HUAYRA_VERSION_LIST['1.0'] in data and self.rutas['huayra_repo_url'] in data:
                 renglones[index] = data.replace(HUAYRA_VERSION_LIST['1.0'], HUAYRA_VERSION_LIST['2.0'])
 
-        with open(SOURCE_LIST, 'w') as fd:
+        with open(self.rutas['source.list'], 'w') as fd:
             fd.write('\n'.join(renglones))
 
     def hay_actualizaciones_pendientes(self):
