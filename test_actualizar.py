@@ -96,7 +96,14 @@ class Test(unittest.TestCase):
         pass
 
     def test_hay_actualizaciones_pendientes(self):
-        pass
+        open(RUTAS_TESTING['huayra_version'], 'w').write('')
+        os.unlink(RUTAS_TESTING['huayra_version'])
+
+        with open(RUTAS_TESTING['source.list'], 'w') as fd:
+            fd.write(HUAYRA_1_REPOS)
+
+        a = HuayraUpdate(rutas=RUTAS_TESTING)
+        self.assertEqual(a.hay_actualizaciones_pendientes(), True)
 
 
 if __name__ == '__main__':

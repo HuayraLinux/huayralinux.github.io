@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import os
-import shutil
 import re
+import shutil
 
 import apt
 import apt.progress
+
 
 HUAYRA_VERSION_LIST = {
     '1.0': 'brisa',
@@ -24,6 +25,8 @@ class HuayraUpdate(object):
     def __init__(self, *args, **kwargs):
         if kwargs.get('rutas'):
             self.rutas = kwargs['rutas']
+
+        self._cache = None
 
         self._source_list_backup = self.rutas['source.list_backup'] % (HUAYRA_VERSION_LIST[self.version_actual])
         self._version_destino = '2.0'
@@ -47,6 +50,15 @@ class HuayraUpdate(object):
 
         return self._version_actual
 
+    @property
+    def cache(self):
+        if not self._cache:
+            self._cache = apt.Cache()
+            self._cache.update(apt.progress.text.AcquireProgress())
+            self._cache.open(None)
+
+        return self._cache
+
     def resguardar_repos(self):
         if not os.path.isfile(self._source_list_backup):
             shutil.copy2(self.rutas['source.list'], self._source_list_backup)
@@ -62,7 +74,12 @@ class HuayraUpdate(object):
         with open(SOURCE_LIST, 'w') as fd:
             fd.write('\n'.join(renglones))
 
+    def hay_actualizaciones_pendientes(self):
+        self.cache.upgrade()
+        if len(self.cache.get_changes()) > 0:
+            return True
 
+        return False
 
 def actualizar_huayra():
     if not es_brisa():
