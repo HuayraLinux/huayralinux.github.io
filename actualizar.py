@@ -81,38 +81,14 @@ class HuayraUpdate(object):
 
         return False
 
-def actualizar_huayra():
-    if not es_brisa():
-        print('Ya estás usando la última versión disponible de Huayra!')
+    def actualizar_paquetes(self):
+        self.cache.upgrade(True)
+        self.cache.commit(
+            apt.progress.text.AcquireProgress(),
+            apt.progress.base.InstallProgress()
+        )
 
-    else:
-        if not os.path.isfile(SOURCE_LIST_BACKUP):
-            shutil.copy2(SOURCE_LIST, SOURCE_LIST_BACKUP)
-
-        actualizar_distro()
-        print 'Brisa Update'
-
-        cambiar_repo()
-        print('cambia repo')
-
-        actualizar_distro()
-        print('listo')
-
-
-def actualizar_distro():
-    try:
-        cache = apt.Cache()
-        cache.update(apt.progress.text.AcquireProgress())
-        cache.open(None)
-
-        cache.upgrade(True)
-
-        cache.commit(apt.progress.text.AcquireProgress(),
-                     apt.progress.base.InstallProgress())
-    except Exception, e:
-        print e
-        print dir(e)
-        raise ''
+        self._cache = None
 
 
 if __name__ == '__main__':
@@ -125,7 +101,25 @@ if __name__ == '__main__':
         print(' Ej.: $ sudo huayra-update\n')
 
     else:
-        respuesta = raw_input('¿Desea continuar? (S)í/(N)o: ')
-        if respuesta == 's':
-            print('')
-            actualizar_huayra()
+        sys.stdout.write('Actualizando a Huayra 2.0, presione "Ctrl + C" para cancelar: ')
+        for i in xrange(5, 0, -1):
+            sys.stdout.write('%d ' % i)
+            sys.stdout.flush()
+            time.sleep(1)
+        sys.stdout.write('\n')
+
+        paloma = HuayraUpdate()
+
+        if paloma.version_actual == '2.0':
+            if paloma.hay_actualizaciones_pendientes():
+                paloma.actualizar_paquetes()
+
+        if paloma.version_actual == '1.0':
+            if paloma.hay_actualizaciones_pendientes():
+                paloma.actualizar_paquetes()
+
+            paloma.resguardar_repos()
+            paloma.modificar_repos()
+
+            paloma.actualizar_paquetes()
+
