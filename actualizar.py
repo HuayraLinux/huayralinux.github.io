@@ -68,7 +68,7 @@ class HuayraUpdate(object):
             shutil.copy2(self.rutas['source.list'], self._source_list_backup)
 
     def modificar_repos(self):
-        with open(SOURCE_LIST, 'r') as fd:
+        with open(self.rutas['source.list'], 'r') as fd:
             renglones = fd.readlines()
 
         for index, data in enumerate(renglones):
