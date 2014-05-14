@@ -13,14 +13,16 @@ HUAYRA_VERSION_LIST = {
     '2.0': 'pampero'
 }
 
+RUTAS = {
+    'source.list': '/etc/apt/sources.list',
+    'source.list_backup': '/etc/apt/sources.list.%s',
+    'huayra_repo_url': 'http://repo.huayra.conectarigualdad.gob.ar/huayra',
+    'huayra_version': '/etc/huayra_version'
+}
+
 
 class HuayraUpdate(object):
-    rutas = {
-        'source.list': '/etc/apt/sources.list',
-        'source.list_backup': '/etc/apt/sources.list.%s',
-        'huayra_repo_url': 'http://repo.huayra.conectarigualdad.gob.ar/huayra',
-        'huayra_version': '/etc/huayra_version'
-    }
+    rutas = RUTAS
 
     def __init__(self, *args, **kwargs):
         if kwargs.get('rutas'):
@@ -96,7 +98,7 @@ if __name__ == '__main__':
     print('| Bienvenido al actualizador de Huayra!')
     print('+----\n')
 
-    if not os.access(SOURCE_LIST, os.W_OK):
+    if not os.access(RUTAS['source.list'], os.W_OK):
         print(' El actualizador debe ser ejecutado como root.')
         print(' Ej.: $ sudo huayra-update\n')
 
