@@ -3,6 +3,7 @@
 import os
 import re
 import shutil
+import sys
 
 import apt
 import apt.progress
