@@ -125,5 +125,6 @@ if __name__ == '__main__':
             paloma.resguardar_repos()
             paloma.modificar_repos()
 
-            paloma.actualizar_paquetes()
+            if paloma.hay_actualizaciones_pendientes():
+                paloma.actualizar_paquetes()
 
