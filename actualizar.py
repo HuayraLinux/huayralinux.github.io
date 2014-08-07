@@ -76,7 +76,7 @@ class HuayraUpdate(object):
                 renglones[index] = data.replace(HUAYRA_VERSION_LIST['1.0'], HUAYRA_VERSION_LIST['2.0'])
 
         with open(self.rutas['source.list'], 'w') as fd:
-            fd.write('\n'.join(renglones))
+            fd.write(''.join(renglones))
 
     def hay_actualizaciones_pendientes(self):
         self.cache.upgrade()
@@ -105,7 +105,7 @@ if __name__ == '__main__':
         print(' Ej.: $ sudo huayra-update\n')
 
     else:
-        sys.stdout.write('Actualizando a Huayra 2.0, presione "Ctrl + C" para cancelar: ')
+        sys.stdout.write('Actualizando a Huayra 2.1, presione "Ctrl + C" para cancelar: ')
         for i in xrange(5, 0, -1):
             sys.stdout.write('%d ' % i)
             sys.stdout.flush()
