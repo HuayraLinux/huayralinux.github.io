@@ -119,8 +119,8 @@ if __name__ == '__main__':
                 paloma.actualizar_paquetes()
 
         elif paloma.version_actual == '1.0':
-            #if paloma.hay_actualizaciones_pendientes():
-            #    paloma.actualizar_paquetes()
+            if paloma.hay_actualizaciones_pendientes():
+                paloma.actualizar_paquetes()
 
             paloma.resguardar_repos()
             paloma.modificar_repos()
