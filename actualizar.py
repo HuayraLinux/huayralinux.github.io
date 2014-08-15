@@ -104,7 +104,12 @@ class HuayraUpdate(object):
         self._cache = None
 
     def eliminar_accesos_escritorio(self):
-        pass
+        for carpeta in os.listdir('/home'):
+            for acceso in ACCESOS_ESCRITORIO:
+                try:
+                    os.unlink(acceso % carpeta)
+                except OSError:
+                    pass
 
 
 if __name__ == '__main__':
