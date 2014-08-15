@@ -22,6 +22,15 @@ RUTAS = {
     'huayra_version': '/etc/huayra_version'
 }
 
+ACCESOS_ESCRITORIO = [
+    '/home/%s/Escritorio/ayuda-mate.desktop',
+    '/home/%s/Escritorio/huayra-bullets.desktop',
+    '/home/%s/Escritorio/huayra-chat.desktop',
+    '/home/%s/Escritorio/huayra-flash-install.desktop',
+    '/home/%s/Escritorio/huayra-tda.desktop',
+    '/home/%s/Escritorio/www-browser.desktop',
+]
+
 
 class HuayraUpdate(object):
     rutas = RUTAS
@@ -94,6 +103,9 @@ class HuayraUpdate(object):
 
         self._cache = None
 
+    def eliminar_accesos_escritorio(self):
+        pass
+
 
 if __name__ == '__main__':
     print('+----')
@@ -127,4 +139,6 @@ if __name__ == '__main__':
 
             if paloma.hay_actualizaciones_pendientes():
                 paloma.actualizar_paquetes()
+
+            paloma.eliminar_accesos_escritorio()
 
