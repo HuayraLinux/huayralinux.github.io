@@ -12,7 +12,7 @@ import apt.progress
 
 HUAYRA_VERSION_LIST = {
     '1.0': 'brisa',
-    '2.0': 'pampero'
+    '2.1': 'pampero'
 }
 
 RUTAS = {
@@ -42,7 +42,7 @@ class HuayraUpdate(object):
         self._cache = None
 
         self._source_list_backup = self.rutas['source.list_backup'] % (HUAYRA_VERSION_LIST[self.version_actual])
-        self._version_destino = '2.0'
+        self._version_destino = '2.1'
 
 
     @property
