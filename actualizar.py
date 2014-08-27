@@ -82,7 +82,7 @@ class HuayraUpdate(object):
 
         for index, data in enumerate(renglones):
             if HUAYRA_VERSION_LIST['1.0'] in data and self.rutas['huayra_repo_url'] in data:
-                renglones[index] = data.replace(HUAYRA_VERSION_LIST['1.0'], HUAYRA_VERSION_LIST['2.0'])
+                renglones[index] = data.replace(HUAYRA_VERSION_LIST['1.0'], HUAYRA_VERSION_LIST['2.1'])
 
         with open(self.rutas['source.list'], 'w') as fd:
             fd.write(''.join(renglones))
