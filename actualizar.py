@@ -131,7 +131,7 @@ if __name__ == '__main__':
 
         paloma = HuayraUpdate()
 
-        if paloma.version_actual == '2.0':
+        if paloma.version_actual == '2.1':
             if paloma.hay_actualizaciones_pendientes():
                 paloma.actualizar_paquetes()
 
