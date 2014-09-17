@@ -76,8 +76,10 @@ class HuayraUpdate(object):
     def configuracion_apt(self, accion):
         if accion == 'crear':
             with open(RUTAS['apt_preferences'], 'w') as fd:
-                fd.write('''Package: *
-APT::Get::Assume-Yes
+                fd.write('''Dpkg::Options {
+   "--force-confdef";
+   "--force-confold";
+}
 ''')
 
         elif accion == 'borrar':
