@@ -20,7 +20,7 @@ RUTAS = {
     'source.list_backup': '/etc/apt/sources.list.%s',
     'huayra_repo_url': 'http://repo.huayra.conectarigualdad.gob.ar/huayra',
     'huayra_version': '/etc/huayra_version',
-    'apt_preferences': '/etc/apt/preferences.d/99_paloma',
+    'dpkg_preferences': '/etc/dpkg/dpkg.cfg.d/99_paloma',
 }
 
 ACCESOS_ESCRITORIO = [
@@ -75,15 +75,13 @@ class HuayraUpdate(object):
 
     def configuracion_apt(self, accion):
         if accion == 'crear':
-            with open(RUTAS['apt_preferences'], 'w') as fd:
-                fd.write('''Dpkg::Options {
-   "--force-confdef";
-   "--force-confold";
-}
+            with open(RUTAS['dpkg_preferences'], 'w') as fd:
+                fd.write('''force-confdef
+force-confold
 ''')
 
         elif accion == 'borrar':
-            os.unlink(RUTAS['apt_preferences'])
+            os.unlink(RUTAS['dpkg_preferences'])
 
     def resguardar_repos(self):
         if not os.path.isfile(self._source_list_backup):
