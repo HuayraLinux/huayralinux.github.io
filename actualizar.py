@@ -78,8 +78,7 @@ class HuayraUpdate(object):
             with open(RUTAS['apt_preferences'], 'w') as fd:
                 fd.write('''Package: *
 APT::Get::Assume-Yes
-Dpkg::Options::force-confold
-Dpkg::Options::force-confdef''')
+''')
 
         elif accion == 'borrar':
             os.unlink(RUTAS['apt_preferences'])
