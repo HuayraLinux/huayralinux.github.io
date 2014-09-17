@@ -19,7 +19,8 @@ RUTAS = {
     'source.list': '/etc/apt/sources.list',
     'source.list_backup': '/etc/apt/sources.list.%s',
     'huayra_repo_url': 'http://repo.huayra.conectarigualdad.gob.ar/huayra',
-    'huayra_version': '/etc/huayra_version'
+    'huayra_version': '/etc/huayra_version',
+    'apt_preferences': '/etc/apt/preferences.d/99_paloma',
 }
 
 ACCESOS_ESCRITORIO = [
@@ -71,6 +72,17 @@ class HuayraUpdate(object):
             self._cache.open(None)
 
         return self._cache
+
+    def configuracion_apt(self, accion):
+        if accion == 'crear':
+            with open(RUTAS['apt_preferences'], 'w') as fd:
+                fd.write('''Package: *
+APT::Get::Assume-Yes
+Dpkg::Options::force-confold
+Dpkg::Options::force-confdef''')
+
+        elif accion == 'borrar':
+            os.unlink(RUTAS['apt_preferences'])
 
     def resguardar_repos(self):
         if not os.path.isfile(self._source_list_backup):
@@ -131,6 +143,8 @@ if __name__ == '__main__':
 
         paloma = HuayraUpdate()
 
+        paloma.configuracion_apt('crear')
+
         if paloma.version_actual == '2.1':
             if paloma.hay_actualizaciones_pendientes():
                 paloma.actualizar_paquetes()
@@ -147,3 +161,4 @@ if __name__ == '__main__':
 
             paloma.eliminar_accesos_escritorio()
 
+        paloma.configuracion_apt('borrar')
