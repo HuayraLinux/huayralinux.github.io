@@ -114,6 +114,16 @@ force-confold
 
         self._cache = None
 
+    def instalar_paquete(self, nombre):
+        paquete = self.cache[nombre]
+
+        if not paquete.is_installed:
+            paquete.mark_install()
+            self.cache.commit(
+                apt.progress.text.AcquireProgress(),
+                apt.progress.base.InstallProgress()
+            )
+
     def eliminar_accesos_escritorio(self):
         for carpeta in os.listdir('/home'):
             for acceso in ACCESOS_ESCRITORIO:
@@ -158,6 +168,7 @@ if __name__ == '__main__':
             if paloma.hay_actualizaciones_pendientes():
                 paloma.actualizar_paquetes()
 
+            paloma.instalar_paquete('huayra-libreoffice')
             paloma.eliminar_accesos_escritorio()
 
         paloma.configuracion_apt('borrar')
