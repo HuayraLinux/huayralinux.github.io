@@ -21,6 +21,7 @@ RUTAS = {
     'huayra_repo_url': 'http://repo.huayra.conectarigualdad.gob.ar/huayra',
     'huayra_version': '/etc/huayra_version',
     'dpkg_preferences': '/etc/dpkg/dpkg.cfg.d/99_paloma',
+    'mdm_preferences': '/etc/mdm/mdm.conf',
 }
 
 ACCESOS_ESCRITORIO = [
@@ -82,6 +83,29 @@ force-confold
 
         elif accion == 'borrar':
             os.unlink(RUTAS['dpkg_preferences'])
+
+    def configuracion_mdm(self):
+        with open(RUTAS['mdm_preferences'], 'w') as fd:
+            fd.write('''[daemon]
+
+Greeter=/usr/lib/mdm/mdmwebkit
+
+[security]
+
+[xdmcp]
+
+[gui]
+
+[greeter]
+
+HTMLTheme=huayra_limbo
+
+[chooser]
+
+[debug]
+
+[servers]
+''')
 
     def resguardar_repos(self):
         if not os.path.isfile(self._source_list_backup):
@@ -170,5 +194,6 @@ if __name__ == '__main__':
 
             paloma.instalar_paquete('huayra-libreoffice')
             paloma.eliminar_accesos_escritorio()
+            paloma.configuracion_mdm()
 
         paloma.configuracion_apt('borrar')
