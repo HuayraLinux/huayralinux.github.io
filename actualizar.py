@@ -156,6 +156,13 @@ HTMLTheme=huayra_limbo
                 except OSError:
                     pass
 
+    def cebar_mate(self):
+        for carpeta in os.listdir('/home'):
+            with open('/home/%s/.dmrc' % carpeta, 'w') as fd:
+                fd.write('''[Desktop]
+Session=mate
+''')
+
 
 if __name__ == '__main__':
     print('+----')
@@ -195,5 +202,6 @@ if __name__ == '__main__':
             paloma.instalar_paquete('huayra-libreoffice')
             paloma.eliminar_accesos_escritorio()
             paloma.configuracion_mdm()
+            paloma.cebar_mate()
 
         paloma.configuracion_apt('borrar')
