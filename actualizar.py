@@ -165,9 +165,10 @@ HTMLTheme=huayra_limbo
                 fd.write('''[Desktop]
 Session=mate
 ''')
-
-            os.chown(ruta, pwd.getpwnam(usuario).pw_uid, grp.getgrnam(usuario).gr_gid)
-
+            try:
+                os.chown(ruta, pwd.getpwnam(usuario).pw_uid, grp.getgrnam(usuario).gr_gid)
+            except:
+                pass
 
 if __name__ == '__main__':
     print('+----')
