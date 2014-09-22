@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import grp
 import os
+import pwd
 import re
 import shutil
 import sys
@@ -157,11 +159,14 @@ HTMLTheme=huayra_limbo
                     pass
 
     def cebar_mate(self):
-        for carpeta in os.listdir('/home'):
-            with open('/home/%s/.dmrc' % carpeta, 'w') as fd:
+        for usuario in os.listdir('/home'):
+            ruta = '/home/%s/.dmrc' % usuario
+            with open(ruta, 'w') as fd:
                 fd.write('''[Desktop]
 Session=mate
 ''')
+
+            os.chown(ruta, pwd.getpwnam(usuario).pw_uid, grp.getgrnam(usuario).gr_gid)
 
 
 if __name__ == '__main__':
