@@ -24,6 +24,7 @@ RUTAS = {
     'huayra_version': '/etc/huayra_version',
     'dpkg_preferences': '/etc/dpkg/dpkg.cfg.d/99_paloma',
     'mdm_preferences': '/etc/mdm/mdm.conf',
+    'flag_actualizacion': '/var/cache/huayra_update',
 }
 
 ACCESOS_ESCRITORIO = [
@@ -170,6 +171,23 @@ Session=mate
             except:
                 pass
 
+    def iniciar_actualizacion(self):
+        with open(RUTAS['flag_actualizacion'], 'w') as fd:
+            fd.write('1')
+
+    def hay_que_actualizar(self):
+        try:
+            with open(RUTAS['flag_actualizacion'], 'r') as fd:
+                pass
+
+            return True
+        except:
+            return False
+
+    def finalizar_actualizacion(self):
+        os.unlink(RUTAS['flag_actualizacion'])
+
+
 if __name__ == '__main__':
     print('+----')
     print('| Bienvenido al actualizador de Huayra!')
@@ -196,8 +214,11 @@ if __name__ == '__main__':
                 paloma.actualizar_paquetes()
 
         elif paloma.version_actual == '1.0':
+            paloma.iniciar_actualizacion()
             if paloma.hay_actualizaciones_pendientes():
                 paloma.actualizar_paquetes()
+
+        if paloma.hay_que_actualizar():
 
             paloma.resguardar_repos()
             paloma.modificar_repos()
@@ -209,5 +230,6 @@ if __name__ == '__main__':
             paloma.eliminar_accesos_escritorio()
             paloma.configuracion_mdm()
             paloma.cebar_mate()
+            paloma.finalizar_actualizacion()
 
         paloma.configuracion_apt('borrar')
